@@ -45,7 +45,7 @@ It's easy to make a listener for when the SVG is done loading. Just pass the nam
 You can also pass additional parameters to <b>svgFactory.load()</b> (see Documentation):
     
     //...
-    svgFactory.load(container, "the_url.svg", callbackFunction, null, false, "the_id", 50, 50, "#ffffff");
+    svgFactory.load(destination, url, onComplete, cache, hideForLoad, svgID, width, height, color);
 
 If you have an SVG on your site that has not been injected using SvgFactoryJS, not to worry! You can still use SvgFactoryJS to manipulate it as long as you have the <b>ID String</b> or <b>Element</b> reference to the SVG:
 
