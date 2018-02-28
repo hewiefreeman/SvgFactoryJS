@@ -11,6 +11,8 @@ At the moment, the only way to install SvgFactoryJS is to download <b>SvgFactory
 
     <script type="text/javascript" src="your_project_folder/SvgFactoryJS.min.js"></script>
     
+That's it!
+    
 <hr>
 
 # Quick Start
@@ -23,7 +25,7 @@ You may also provide a <b>String</b> parameter for <b>SvgFactory()</b> to set it
 
     var svgFactory = new SvgFactory("px");
     
-Now you can freely use Sv
+
 
 <hr>
 
