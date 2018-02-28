@@ -55,7 +55,7 @@ If you have an SVG on your site that has not been injected using SvgFactoryJS, n
     //or as an SVG Element reference:
     var svg2 = svgFactory.get(svg2Element);
     
-<b>svgFactory.get()</b> returns an <b>SvgFactoryImage</b>. You can use these <b>SvgFactoryImage</b>s to access all the features to manipulate the SVGs with SvgFactoryJS. This makes it fast and easy to remove SVG elements (and it's garbage) from your site, or set the SVG's color, size, or ID:
+<b>svgFactory.get()</b> returns an <b>SvgFactoryImage</b>. You can use an <b>SvgFactoryImage</b> to access all the features to manipulate the underlying SVG with SvgFactoryJS. This makes it fast and easy to remove SVG elements (and it's garbage) from your site, or set the SVG's color, size, or ID:
     
     //...
     var svg = svgFactory.get("theSvg");
@@ -64,7 +64,7 @@ If you have an SVG on your site that has not been injected using SvgFactoryJS, n
     svg.setId("new_svg_id");
     svg.remove();
     
-If your SVG has multiple <b>Path</b> tags, you can change the color all the <b>Path</b>s individually by making an <b>Array</b> of colors:
+If your SVG has multiple <b>Path</b> tags, you can change the color of all the <b>Path</b>s individually by making an <b>Array</b> of colors:
 
     //...
     svg.setColor(["#7c2af9", "rgb(120, 65, 200)", "rgba(74, 179, 7, 0.5)"]);
@@ -74,3 +74,6 @@ If your SVG has multiple <b>Path</b> tags, you can change the color all the <b>P
 <hr>
 
 # Documentation
+
+<h3><b>SvgFactory</b>(*String* unitType)</h3>
+<td>Initializes an instance of <b>SvgFactory</b>.</td>
