@@ -45,13 +45,31 @@ It's easy to make a listener for when the SVG is done loading. Just pass the nam
 You can also pass additional parameters to <b>svgFactory.load()</b> (see Documentation):
     
     //...
-    svgFactory.load(container, "the_url.svg", callbackFunction, null, false, "the_id", 50, 50, ["#ffffff", "#a3f4c1"]);
+    svgFactory.load(container, "the_url.svg", callbackFunction, null, false, "the_id", 50, 50, "#ffffff");
 
-If you have an SVG on your site that has not been injected using SvgFactoryJS, not to worry! You can still use SvgFactoryJS to manipulate it as long as you have the <b>ID</b> or <b>Element</b> reference to the SVG:
+If you have an SVG on your site that has not been injected using SvgFactoryJS, not to worry! You can still use SvgFactoryJS to manipulate it as long as you have the <b>ID String</b> or <b>Element</b> reference to the SVG:
 
+    //...
     var svg1 = svgFactory.get("svg_id");
-    //or
-    var svg1 = svgFactory.get("svg_id");
+    
+    //or as an SVG Element reference:
+    var svg2 = svgFactory.get(svg2Element);
+    
+<b>svgFactory.get()</b> returns an <b>SvgFactoryImage</b>. You can use these <b>SvgFactoryImage</b>s to access all the features to manipulate the SVGs with SvgFactoryJS. This makes it fast and easy to remove SVG elements (and it's garbage) from your site, or set the SVG's color, size, or ID:
+    
+    //...
+    var svg = svgFactory.get("theSvg");
+    svg.setColor("#123456");
+    svg.setSize(125, 352);
+    svg.setId("new_svg_id");
+    svg.remove();
+    
+If your SVG has multiple <b>Path</b> tags, you can change the color all the <b>Path</b>s individually by making an <b>Array</b> of colors:
+
+    //...
+    svg.setColor(["#7c2af9", "rgb(120, 65, 200)", "rgba(74, 179, 7, 0.5)"]);
+    
+> NOTE: The colors are applied in the order the <b>Path</b>s appear in the SVG.
 
 <hr>
 
