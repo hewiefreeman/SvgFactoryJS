@@ -23,7 +23,7 @@ Start by initializing the SvgFactory:
     
 You may also provide a <b>String</b> parameter for <b>SvgFactory()</b> to set it's unit type (for example: in, mm, em, pt, etc):
 
-    var svgFactory = new SvgFactory("px");
+    var svgFactory = new SvgFactory("em");
     
 To load an external SVG, first you need to get the <b>Element</b> reference of the container you'd like to inject it into. Then pass the container's <b>Element</b> reference and a <b>String</b> URL into <b>svgFactory.load()</b>:
     
@@ -64,19 +64,65 @@ If you have an SVG on your site that has not been injected using SvgFactoryJS, n
     svg.setId("new_svg_id");
     svg.remove();
     
-If your SVG has multiple <b>Path</b> tags, you can change the color of all the <b>Path</b>s individually by making an <b>Array</b> of colors:
+If your SVG has multiple <b>Path</b> tags, you can change the color of all the <b>Path</b> tags individually by making an <b>Array</b> of colors:
 
     //...
     svg.setColor(["#7c2af9", "rgb(120, 65, 200)", "rgba(74, 179, 7, 0.5)"]);
     
-> NOTE: The colors are applied in the order the <b>Path</b>s appear in the SVG.
+> <b>Note</b>: The colors are applied in the order the <b>Path</b> tags appear in the SVG.
+
+> <b>Warning</b>: If you pass a <b>String</b> (ex: `svg.setColor("#7c2af9")`) for an SVG with multiple <b>Path</b> tags, the color will be applied to them all. Also, if you pass an <b>Array</b> that doesn't have as many colors as the SVG has <b>Path</b> tags, you will be thrown an error.
 
 <hr>
 
 # Documentation
 
-## SvgFactory(*String* unitType)
-   Initializes an instance of <b>SvgFactory</b>.
+<dl>
+    <dt><h2>Class SvgFactory(unitType)</h2></dt>
+    <dd>
+        Initializes an instance of <b>SvgFactory</b>.
+        <br>
+        <table style="width:100%">
+        <tr>
+            <th>Parameter</th>
+            <th>Description</th> 
+        </tr>
+        <tr>
+            <td><b>unitType</b></td>
+            <td><b>Optional</b>: (<i>String</i>) Defines the type of dimensional units the library will use for sizing. Accepted unit types are "px", "%", "em", "ex", "cm", "mm", "in", "pt", and "pc". Default is <b>"px"</b> (pixel value).</td>
+        </tr>
+        </table style="text-align: left;">
+        <br>
+        <h3>SvgFactory Methods:</h3>
+        <dl><dd>
+        <table style="width:100%">
+        <tr>
+            <th width="30%">Method</th>
+            <th>Description</th> 
+        </tr>
+        <tr>
+            <td><b>load</b>(destination, url, onComplete, cache, hideForLoad, svgID, width, height, color)</td>
+            <td><p>Loads an SVG from the <b>url</b> into the <b>destination</b>.</p>
+                <p> </p>
+                <ul>
+                    <li><b>destination</b> (Element): The DOM element to inject the loaded SVG into.</li>
+                    <li><b>url</b> (String): The URL path for the SVG image to load.</li>
+                    <li><b>onComplete</b> (Function) <i>Optional</i>: The function to call when the SVG is done loading.</li>
+                    <li><b>cache</b> (Boolean) <i>Optional</i>: Whether or not to use the cache. Default is <b>true</b>.</li>
+                    <li><b>hideForLoad</b> (Boolean) <i>Optional</i>: Whether or not to hide the container while loading the SVG. Container is shown again only after the SVG has loaded and all modifications (provided by <b>load()</b>) have been applied. Default is <b>false</b>.</li>
+                    <li><b>svgID</b> (String) <i>Optional</i>: The ID to be given to the injected SVG tag.</li>
+                    <li><b>width</b> (Integer) <i>Optional</i>: The width to be given to the injected SVG tag. A positive number will </li>
+                </ul>
+            </td> 
+        </tr>
+        </table>
+        </dd></dl>
+        <br>
+  <dt><h2>Class SvgFactoryImage()</h2></dt>
+        <dd>There is an instance of <b>SvgFactoryImage</b> for every SVG injected and retrieved with SvgFactoryJS. You can think of an <b>SvgFactoryImage</b> as an actual SVG image, since you will use <b>SvgFactoryImage</b> to maniplulate an SVG instead of it's <b>Element</b>.
+            <br>
+        </dd>
+</dl>
 
 <hr>
 
