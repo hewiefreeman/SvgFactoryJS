@@ -91,10 +91,25 @@ If your SVG has multiple <b>Path</b> tags, you can change the color of all the <
             <td><b>unitType</b></td>
             <td><b>Optional</b>: (<i>String</i>) Defines the type of dimensional units the library will use for sizing. Accepted unit types are "px", "%", "em", "ex", "cm", "mm", "in", "pt", and "pc". Default is <b>"px"</b> (pixel value).</td>
         </tr>
-        </table style="text-align: left;">
+        </table>
+        <br>
+        <h3><i>SvgFactory</i> Fields:</h3>
+        <table style="width:100%">
+        <tr>
+            <th width="30%">Field</th>
+            <th>Description</th>
+        </tr>
+        <tr>
+            <td><b>unitType</b></td>
+            <td>(String) Defines the type of dimensional units the library will use for sizing. If you wish to manually set this field, <b>only</b> set to "px", "%", "em", "ex", "cm", "mm", "in", "pt", or "pc".</td>
+        </tr>
+        <tr>
+            <td><b>loadedSvgs</b></td>
+            <td>(Array) An <b>Array</b> of all the instances of <b>SvgFactoryImage</b> that SvgFactoryJS has created. <b>READ ONLY</b></td>
+        </tr>
+        </table>
         <br>
         <h3><i>SvgFactory</i> Methods:</h3>
-        <dl><dd>
         <table style="width:100%">
         <tr>
             <th width="30%">Method</th>
@@ -127,7 +142,6 @@ If your SVG has multiple <b>Path</b> tags, you can change the color of all the <
             </td> 
         </tr>
         </table>
-        </dd></dl>
         <br>
   <dt><h2>Class SvgFactoryImage()</h2></dt>
         <dd>There is an instance of <b>SvgFactoryImage</b> for every SVG injected and retrieved with SvgFactoryJS. You can think of an <b>SvgFactoryImage</b> as an actual SVG image, since you will use <b>SvgFactoryImage</b> to maniplulate an SVG instead of it's <b>Element</b>.
