@@ -93,7 +93,7 @@ If your SVG has multiple <b>Path</b> tags, you can change the color of all the <
         </tr>
         </table style="text-align: left;">
         <br>
-        <h3>SvgFactory Methods:</h3>
+        <h3><i>SvgFactory</i> Methods:</h3>
         <dl><dd>
         <table style="width:100%">
         <tr>
@@ -111,7 +111,18 @@ If your SVG has multiple <b>Path</b> tags, you can change the color of all the <
                     <li><b>cache</b> (Boolean) <i>Optional</i>: Whether or not to use the cache. Default is <b>true</b>.</li>
                     <li><b>hideForLoad</b> (Boolean) <i>Optional</i>: Whether or not to hide the container while loading the SVG. Container is shown again only after the SVG has loaded and all modifications (provided by <b>load()</b>) have been applied. Default is <b>false</b>.</li>
                     <li><b>svgID</b> (String) <i>Optional</i>: The ID to be given to the injected SVG tag.</li>
-                    <li><b>width</b> (Integer) <i>Optional</i>: The width to be given to the injected SVG tag. A positive number will </li>
+                    <li><b>width</b> (Integer) <i>Optional</i>: The width to be given to the injected SVG tag. Negative numbers are handled as percentage, otherwise <b>SvgFactory.unitType</b> is used.</li>
+                    <li><b>height</b> (Integer) <i>Optional</i>: The height to be given to the injected SVG tag. Negative numbers are handled as percentage, otherwise <b>SvgFactory.unitType</b> is used.</li>
+                    <li><b>color</b> (String or [String]) <i>Optional</i>: If a <b>String</b> is used, all <b>Path</b> tags will be set to that color. If an <b>Array</b> is used, the colors are applied in the order the <b>Path</b> tags appear in the SVG. <b>Do not</b> pass an <b>Array</b> of colors with less items than there are <b>Path</b> tags in the SVG image.</li>
+                </ul>
+            </td> 
+        </tr>
+        <tr>
+            <td><b>get</b>(idOrElement)</td>
+            <td><p>Returns the <b>SvgFactoryImage</b> for an SVG. Can use the SVG's ID as a <b>String</b>, or the SVG's <b>Element</b> reference.</p>
+                <p></p>
+                <ul>
+                    <li><b>idOrElement</b> (String or Element): The SVG's ID or <b>Element</b> reference you wish to get the <b>SvgFactoryImage</b> for.</li>
                 </ul>
             </td> 
         </tr>
