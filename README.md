@@ -141,8 +141,20 @@ If your SVG has multiple <b>Path</b> tags, you can change the color of all the <
                 </ul>
             </td> 
         </tr>
+        <tr>
+            <td><b>setUnitType</b>(unitType)</td>
+            <td><p>Sets the <b>unitType</b> of SvgFactoryJS.</p>
+                <p></p>
+                <ul>
+                    <li><b>unitType</b> (String): The type of dimensional units the library will use for sizing. Can only set to "px", "%", "em", "ex", "cm", "mm", "in", "pt", or "pc".</li>
+                </ul>
+            </td> 
+        </tr>
         </table>
         <br>
+    </dd>
+</dl>
+<dl>
   <dt><h2>Class SvgFactoryImage()</h2></dt>
         <dd>There is an instance of <b>SvgFactoryImage</b> for every SVG injected and retrieved with SvgFactoryJS. You can think of an <b>SvgFactoryImage</b> as an actual SVG image, since you will use <b>SvgFactoryImage</b> to maniplulate an SVG instead of it's <b>Element</b>.
             <br>
