@@ -126,8 +126,8 @@ If your SVG has multiple <b>Path</b> tags, you can change the color of all the <
                     <li><b>cache</b> (Boolean) <i>Optional</i>: Whether or not to use the cache. Default is <b>true</b>.</li>
                     <li><b>hideForLoad</b> (Boolean) <i>Optional</i>: Whether or not to hide the container while loading the SVG. Container is shown again only after the SVG has loaded and all modifications (provided by <b>load()</b>) have been applied. Default is <b>false</b>.</li>
                     <li><b>svgID</b> (String) <i>Optional</i>: The ID to be given to the injected SVG tag.</li>
-                    <li><b>width</b> (Integer) <i>Optional</i>: The width to be given to the injected SVG tag. Negative numbers are handled as percentage, otherwise <b>SvgFactory.unitType</b> is used.</li>
-                    <li><b>height</b> (Integer) <i>Optional</i>: The height to be given to the injected SVG tag. Negative numbers are handled as percentage, otherwise <b>SvgFactory.unitType</b> is used.</li>
+                    <li><b>width</b> (Number) <i>Optional</i>: The width to be given to the injected SVG tag. Negative numbers are handled as percentage, otherwise <b>SvgFactory.unitType</b> is used.</li>
+                    <li><b>height</b> (Number) <i>Optional</i>: The height to be given to the injected SVG tag. Negative numbers are handled as percentage, otherwise <b>SvgFactory.unitType</b> is used.</li>
                     <li><b>color</b> (String or [String]) <i>Optional</i>: If a <b>String</b> is used, all <b>Path</b> tags will be set to that color. If an <b>Array</b> is used, the colors are applied in the order the <b>Path</b> tags appear in the SVG. <b>Do not</b> pass an <b>Array</b> of colors with less items than there are <b>Path</b> tags in the SVG image.</li>
                 </ul>
             </td> 
@@ -158,6 +158,48 @@ If your SVG has multiple <b>Path</b> tags, you can change the color of all the <
   <dt><h2>Class SvgFactoryImage()</h2></dt>
         <dd>There is an instance of <b>SvgFactoryImage</b> for every SVG injected and retrieved with SvgFactoryJS. You can think of an <b>SvgFactoryImage</b> as an actual SVG image, since you will use <b>SvgFactoryImage</b> to maniplulate an SVG instead of it's <b>Element</b>.
             <br>
+        <h3><i>SvgFactoryImage</i> Fields:</h3>
+        <table style="width:100%">
+        <tr>
+            <th width="30%">Field</th>
+            <th>Description</th>
+        </tr>
+        <tr>
+            <td><b>element</b></td>
+            <td>(SVGElement) The SVG DOM <b>Element</b> of the <b>SvgFactoryImage</b></td>
+        </tr>
+        <tr>
+            <td><b>fills</b></td>
+            <td>(Array of Array [[], ]) An <b>Array</b> of <i>fills</i> for the SVG. A <i>fill</i> is an <b>Array</b> defined like so [<b>color</b>, <b>opacity</b>]
+            <ul>
+                <li><b>color</b> (String): The color of the fill</li>
+                <li><b>opacity</b> (Number): The opacity of the fill</li>
+            </ul>
+            </td>
+        </tr>
+        <tr>
+            <td><b>strokes</b></td>
+            <td>(Array of Array [[], ]) An <b>Array</b> of strokes for the SVG. A stroke is an <b>Array</b> defined like so [<b>color</b>, <b>opacity</b>, <b>width</b>, <b>miterlimit</b>, <b>dasharray</b>, <b>linecap</b>, <b>linejoin</b>]
+            <ul>
+                <li><b>color</b> (String): The color of the stroke</li>
+                <li><b>opacity</b> (Number): The opacity of the stroke</li>
+                <li><b>width</b> (Number): The width of the stroke</li>
+                <li><b>miterlimit</b> (Number): The miterlimit of the stroke</li>
+                <li><b>dasharray</b> (Array): The dasharray of the stroke</li>
+                <li><b>linecap</b> (String): The linecap of the stroke</li>
+                <li><b>linejoin</b> (String): The linejoin of the stroke</li>
+            </ul>
+            </td>
+        </tr>
+        <tr>
+            <td><b>url</b></td>
+            <td>(String) The URL of the SVG image (null for objects that haven't been loaded with <b>SvgFactory.load()</b> method)</td>
+        </tr>
+        <tr>
+            <td><b>id</b></td>
+            <td>(String) The ID of the <b>SvgFactoryImage</b> and underlying <b>SVGElement</b></td>
+        </tr>
+        </table>
         </dd>
 </dl>
 
