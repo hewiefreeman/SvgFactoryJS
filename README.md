@@ -171,6 +171,7 @@ If your SVG has multiple <b>Path</b> tags, you can change the color of all the <
         <tr>
             <td><b>fills</b></td>
             <td>(Array of Array [[], ]) An <b>Array</b> of <i>fills</i> for the SVG. A <i>fill</i> is an <b>Array</b> defined like so [<b>color</b>, <b>opacity</b>]. Any property can be ignored by setting it to null.
+            <br>
             <ul>
                 <li><b>color</b> (String): The color of the fill</li>
                 <li><b>opacity</b> (Number): The opacity of the fill</li>
@@ -180,6 +181,7 @@ If your SVG has multiple <b>Path</b> tags, you can change the color of all the <
         <tr>
             <td><b>strokes</b></td>
             <td>(Array of Array [[], ]) An <b>Array</b> of strokes for the SVG. A stroke is an <b>Array</b> defined like so [<b>color</b>, <b>opacity</b>, <b>width</b>, <b>miterlimit</b>, <b>dasharray</b>, <b>linecap</b>, <b>linejoin</b>]. Any property can be ignored by setting it to null.
+            <br>
             <ul>
                 <li><b>color</b> (String): The color of the stroke</li>
                 <li><b>opacity</b> (Number): The opacity of the stroke</li>
