@@ -75,7 +75,7 @@ If your SVG has multiple <b>Path</b> tags, you can change the color of all the <
 
 <hr>
 
-# Documentation
+# Documentation (In progress)
 
 <dl>
     <dt><h2>Class SvgFactory(unitType)</h2></dt>
@@ -96,7 +96,7 @@ If your SVG has multiple <b>Path</b> tags, you can change the color of all the <
         <h3><i>SvgFactory</i> Fields:</h3>
         <table style="width:100%">
         <tr>
-            <th width="30%">Field</th>
+            <th width="25%">Field</th>
             <th>Description</th>
         </tr>
         <tr>
@@ -161,7 +161,7 @@ If your SVG has multiple <b>Path</b> tags, you can change the color of all the <
         <h3><i>SvgFactoryImage</i> Fields:</h3>
         <table style="width:100%">
         <tr>
-            <th width="30%">Field</th>
+            <th width="25%">Field</th>
             <th>Description</th>
         </tr>
         <tr>
