@@ -225,54 +225,57 @@ SvgFactoryImage.prototype.getElementById = function(id){
 
 SvgFactoryImage.prototype.setSize = function(width, height){
 	if(width != null){
-		if(width >= 0){
+		if(width.constructor === String){
+			this.element.setAttribute("width", width);
+			this.width = width;
+		}else{
 			this.element.setAttribute("width", width+this.factory.unitType);
 			this.width = width+this.factory.unitType;
-		}else{
-			this.element.setAttribute("width", (width*(-1))+"%");
-			this.width = (width*(-1))+"%";
 		}
 	}
 	//
 	if(height != null){
-		if(height >= 0){
+		if(height.constructor === String){
+			this.element.setAttribute("height", height);
+			this.height = height;
+		}else{
 			this.element.setAttribute("height", height+this.factory.unitType);
 			this.height = height+this.factory.unitType;
-		}else{
-			this.element.setAttribute("height", (height*(-1))+"%");
-			this.height = (height*(-1))+"%";
 		}
 	}
 }
 
 SvgFactoryImage.prototype.setWidth = function(width){
 	if(width != null){
-		if(width >= 0){
+		if(width.constructor === String){
+			this.element.setAttribute("width", width);
+			this.width = width;
+		}else{
 			this.element.setAttribute("width", width+this.factory.unitType);
 			this.width = width+this.factory.unitType;
-		}else{
-			this.element.setAttribute("width", (width*(-1))+"%");
-			this.width = (width*(-1))+"%";
 		}
 	}
 }
 
 SvgFactoryImage.prototype.setHeight = function(height){
 	if(height != null){
-		if(height >= 0){
+		if(height.constructor === String){
+			this.element.setAttribute("height", height);
+			this.height = height;
+		}else{
 			this.element.setAttribute("height", height+this.factory.unitType);
 			this.height = height+this.factory.unitType;
-		}else{
-			this.element.setAttribute("height", (height*(-1))+"%");
-			this.height = (height*(-1))+"%";
 		}
 	}
 }
 
 SvgFactoryImage.prototype.setFills = function(fills){
 	if(fills != null){
+		if(fills.constructor === String){
+			fills = [[fills]];
+		}
 		// order: color, opacity
-		//color EX: [["#5af3d9", 1], ["#5af3d9", 0.3]]
+		// fills EX: [["#5af3d9", 1], ["#5af3d9", 0.3]]
 		var elements = this.factory.getSvgElements(this.element);
 		var lessFills = false;
 		var fillOn = 1;
@@ -317,8 +320,11 @@ SvgFactoryImage.prototype.setFillOf = function(element, fill){
 
 SvgFactoryImage.prototype.setStrokes = function(strokes){
 	if(strokes != null){
-		// order: color, opacity, width, miterlimit, dasharray, linejoin
-		//stroke EX: [["#5af3d9", 1, 4, 4, "none"], ["#5af3d9", 0.3, 2, 4, "none"]]
+		if(strokes.constructor === String){
+			strokes = [[strokes]];
+		}
+		// order: color, opacity, width, miterlimit, dasharray, linecap, linejoin
+		// stroke EX: [["#5af3d9", 1, 4, 4, "5,10", "round", "round"], ["#5af3d9", 0.3, 2, 4, "none"]]
 		var paths = this.factory.getSvgElements(this.element);
 		var lessStrokes = false;
 		var strokeOn = 1;
