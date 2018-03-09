@@ -25,7 +25,11 @@ You may also provide a <b>String</b> parameter for <b>SvgFactory()</b> to set it
 
     var svgFactory = new SvgFactory("em");
     
-To load an external SVG, first you need to get the <b>Element</b> reference of the container you'd like to inject it into. Then pass the container's <b>Element</b> reference and a <b>String</b> URL into <b>svgFactory.load()</b>:
+Or you can set the unit type with <b>setUnitType()</b>:
+
+    svgFactory.setUnitType("px");
+    
+To load an external SVG, first you need to get the <b>Element</b> reference of the container you'd like to inject it into. Then pass the container's <b>Element</b> reference and a URL into <b>svgFactory.load()</b>:
     
     //...
     var container = document.getElementById("container_id");
@@ -56,7 +60,7 @@ If you have an SVG on your site that has not been injected using SvgFactoryJS, n
     //or by it's SVG Element reference:
     var svg2 = svgFactory.get(svg2Element);
     
-<b>svgFactory.get()</b> returns an <b>SvgFactoryImage</b>. You can use an <b>SvgFactoryImage</b> to access all the features to manipulate the underlying SVG with SvgFactoryJS. This makes it fast and easy to remove SVG elements (and it's garbage) from your site, or set the SVG's fills, strokes, size, or ID:
+<b>svgFactory.get()</b> returns an <b>SvgFactoryImage</b>. You can use an <b>SvgFactoryImage</b> to access all the features to manipulate the underlying SVG with SvgFactoryJS. This makes it fast and easy to remove SVG elements (and it's garbage) from your site, or set the SVG's fills, strokes, size, or ID (see Documentation):
     
     //...
     var svg = svgFactory.get("theSvg");
@@ -66,14 +70,21 @@ If you have an SVG on your site that has not been injected using SvgFactoryJS, n
     svg.setId("new_svg_id");
     svg.remove();
     
-If your SVG has multiple <b>Elements</b>, you can change the fill or stroke of each <b>Element</b> individually by making an <b>Array</b> of colors:
+If your SVG has multiple <b>Elements</b>, you can change the fill or stroke of each <b>Element</b> individually by making an <b>Array</b> of fills:
 
     //...
     svg.setFills([["#7c2af9", 1], ["rgb(120, 65, 200)", 0.6], ["rgba(74, 179, 7, 0.5)", 0.3]]);
-    
-> <b>Note</b>: The colors are applied in the same order that each <b>Element</b> appears in the SVG.
 
-> <b>Warning</b>: If you pass a <b>String</b> (ex: `svg.setColor("#7c2af9")`) for an SVG with more than one <b>Element</b>, the color will be applied to them all. Also, if you pass an <b>Array</b> that doesn't have as many colors as the SVG has <b>Path</b> tags, you will be thrown an error.
+Same goes for the SVG's strokes:
+
+    //...
+    svg.setStrokes([["#7c2af9", 1], ["rgb(120, 65, 200)", 0.6], ["rgba(74, 179, 7, 0.5)", 0.3]]);
+
+> <b>Note</b>: The fills and strokes are applied in the same order that each <b>Element</b> appears in the SVG.
+
+> <b>Warning</b>: If you pass a <b>String</b> to <b>setFills()</b> or <b>setStrokes()</b> for an SVG with more than one inner <b>Element</b>, the color will be applied to every inner <b>Element</b>. Also, if you pass an <b>Array</b> that doesn't have as many fills or strokes as the SVG has <b>Element</b>s, it will cycle through the provided fills or strokes.
+
+You can also get an SVG's
 
 <hr>
 
@@ -206,11 +217,11 @@ If your SVG has multiple <b>Elements</b>, you can change the fill or stroke of e
         </tr>
         <tr>
             <td><b>width</b></td>
-            <td>(String) The width of the <b>SVGElement</b> with it's <b>unitType</b> included (eg: "150px")</td>
+            <td>(String) The width of the <b>SVGElement</b> with it's <b>unitType</b> included. EG: "150px"</td>
         </tr>
         <tr>
             <td><b>height</b></td>
-            <td>(String) The height of the <b>SVGElement</b> with it's <b>unitType</b> included (eg: "340in")</td>
+            <td>(String) The height of the <b>SVGElement</b> with it's <b>unitType</b> included. EG: "340in"</td>
         </tr>
         </table>
         <br>
@@ -222,17 +233,17 @@ If your SVG has multiple <b>Elements</b>, you can change the fill or stroke of e
         </tr>
         <tr>
             <td><b>setSize</b>(width, height)</td>
-            <td><p>Sets the <b>width</b> and <b>height</b> of the SVG <b>Element</b> and <b>SvgFactoryImage</b> using the <b>unitType</b> of <b>SvgFactory</b>. Providing a negative number will change the <b>unitType</b> of that value to "%". EG: setSize(20, -100) will result in (width: "20px", height: "100%") if the <b>unitType</b> of <b>SvgFactory</b> is "px"</p>
+            <td><p>Sets the <b>width</b> and <b>height</b> of the SVG <b>Element</b> and <b>SvgFactoryImage</b> using the <b>unitType</b> of <b>SvgFactory</b>. Providing a <b>String<b> will override the <b>unitType</b> of <b>SvgFactory</b>.</p>
              <p> </p>
             <ul>
-                <li><b>width</b> (Number): The desired width</li>
-                <li><b>height</b> (Number): The desired height</li>
+                <li><b>width</b> (Number or String): The desired width</li>
+                <li><b>height</b> (Number or String): The desired height</li>
             </ul>
             </td>
         </tr>
         <tr>
             <td><b>setWidth</b>(width)</td>
-            <td><p>Sets the <b>width</b> of the SVG <b>Element</b> and <b>SvgFactoryImage</b> using the <b>unitType</b> of <b>SvgFactory</b>. Providing a negative number will change the <b>unitType</b> of <b>width</b> to "%". EG: setWidth(-100) will result in (width: "100%")</p>
+            <td><p>Sets the <b>width</b> of the SVG <b>Element</b> and <b>SvgFactoryImage</b> using the <b>unitType</b> of <b>SvgFactory</b>. Providing a <b>String<b> will override the <b>unitType</b> of <b>SvgFactory</b>.</p>
              <p> </p>
             <ul>
                 <li><b>width</b> (Number): The desired width</li>
@@ -241,10 +252,20 @@ If your SVG has multiple <b>Elements</b>, you can change the fill or stroke of e
         </tr>
         <tr>
             <td><b>setHeight</b>(height)</td>
-            <td><p>Sets the <b>height</b> of the SVG <b>Element</b> and <b>SvgFactoryImage</b> using the <b>unitType</b> of <b>SvgFactory</b>. Providing a negative number will change the <b>unitType</b> of <b>height</b> to "%". EG: setHeight(-100) will result in (height: "100%")</p>
+            <td><p>Sets the <b>height</b> of the SVG <b>Element</b> and <b>SvgFactoryImage</b> using the <b>unitType</b> of <b>SvgFactory</b>. Providing a <b>String<b> will override the <b>unitType</b> of <b>SvgFactory</b>.</p>
              <p> </p>
             <ul>
-                <li><b>height</b> (Number): The desired height</li>
+                <li><b>height</b> (Number or String): The desired height</li>
+            </ul>
+            </td>
+        </tr>
+        <tr>
+            <td><b>setFills</b>(fills)</td>
+            <td><p>Sets the fill color and opacity of all <b>Elements</b> in the SVG.</p>
+                <p>EG: [["blue", 1], ["red", 0.2], ["green", 0.8]]</p>
+             <p> </p>
+            <ul>
+                <li><b>fills</b> (Array[Fill, ...]): An <b>Array</b> of <b>Fill</b>. A <b>Fill</b> is also an Array structured like so: [fill-color, fill-opacity]</i>
             </ul>
             </td>
         </tr>
