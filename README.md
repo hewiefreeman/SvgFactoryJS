@@ -1,7 +1,7 @@
 # SvgFactoryJS
-A fast, easy, and lightweight vanilla Javascript SVG manipulator and external loader with cache control.
+A fast, easy, and lightweight vanilla Javascript SVG API for manipulating, managing, and externally loading SVGs with cache control.
 
-<h4>Are you looking for a loader, element manager, sizing tool, or even color changer for your SVGs? Well, look no further. This library is fast and efficient at what it does, and is coded with 100% vanilla javascript. Not to mention you can load your resources ignoring the cache if you want to, so you can easily implement with your own file versioning methods.</h4>
+<h4>Are you looking for a loader, element manager, sizing tool, or color changer for your SVGs? Well, look no further. This library is fast and efficient at what it does, and is coded with 100% vanilla javascript. Not to mention you can load your resources ignoring the cache if you want to, so you can easily implement with your own file versioning methods.</h4>
 
 <hr>
 
@@ -45,33 +45,35 @@ It's easy to make a listener for when the SVG is done loading. Just pass the nam
 You can also pass additional parameters to <b>svgFactory.load()</b> (see Documentation):
     
     //...
-    svgFactory.load(destination, url, onComplete, cache, hideForLoad, svgID, width, height, color);
+    svgFactory.load(destination, url, onComplete, cache, hideForLoad, svgID, width, height, fills, strokes);
 
-If you have an SVG on your site that has not been injected using SvgFactoryJS, not to worry! You can still use SvgFactoryJS to manipulate it as long as you have the <b>ID String</b> or <b>Element</b> reference to the SVG:
+If you have an SVG on your site that has not been injected using SvgFactoryJS, not to worry! You can still use SvgFactoryJS to manipulate it as long as you have the ID or <b>Element</b> reference to the SVG:
 
     //...
+    //get the SVG by it's ID:
     var svg1 = svgFactory.get("svg_id");
     
-    //or as an SVG Element reference:
+    //or by it's SVG Element reference:
     var svg2 = svgFactory.get(svg2Element);
     
-<b>svgFactory.get()</b> returns an <b>SvgFactoryImage</b>. You can use an <b>SvgFactoryImage</b> to access all the features to manipulate the underlying SVG with SvgFactoryJS. This makes it fast and easy to remove SVG elements (and it's garbage) from your site, or set the SVG's color, size, or ID:
+<b>svgFactory.get()</b> returns an <b>SvgFactoryImage</b>. You can use an <b>SvgFactoryImage</b> to access all the features to manipulate the underlying SVG with SvgFactoryJS. This makes it fast and easy to remove SVG elements (and it's garbage) from your site, or set the SVG's fills, strokes, size, or ID:
     
     //...
     var svg = svgFactory.get("theSvg");
-    svg.setColor("#123456");
+    svg.setFills("#123456");
+    svg.setStrokes([["#000000", 0.5]]);
     svg.setSize(125, 352);
     svg.setId("new_svg_id");
     svg.remove();
     
-If your SVG has multiple <b>Path</b> tags, you can change the color of all the <b>Path</b> tags individually by making an <b>Array</b> of colors:
+If your SVG has multiple <b>Elements</b>, you can change the fill or stroke of each <b>Element</b> individually by making an <b>Array</b> of colors:
 
     //...
-    svg.setColor(["#7c2af9", "rgb(120, 65, 200)", "rgba(74, 179, 7, 0.5)"]);
+    svg.setFills([["#7c2af9", 1], ["rgb(120, 65, 200)", 0.6], ["rgba(74, 179, 7, 0.5)", 0.3]]);
     
-> <b>Note</b>: The colors are applied in the order the <b>Path</b> tags appear in the SVG.
+> <b>Note</b>: The colors are applied in the same order that each <b>Element</b> appears in the SVG.
 
-> <b>Warning</b>: If you pass a <b>String</b> (ex: `svg.setColor("#7c2af9")`) for an SVG with multiple <b>Path</b> tags, the color will be applied to them all. Also, if you pass an <b>Array</b> that doesn't have as many colors as the SVG has <b>Path</b> tags, you will be thrown an error.
+> <b>Warning</b>: If you pass a <b>String</b> (ex: `svg.setColor("#7c2af9")`) for an SVG with more than one <b>Element</b>, the color will be applied to them all. Also, if you pass an <b>Array</b> that doesn't have as many colors as the SVG has <b>Path</b> tags, you will be thrown an error.
 
 <hr>
 
@@ -124,11 +126,12 @@ If your SVG has multiple <b>Path</b> tags, you can change the color of all the <
                     <li><b>url</b> (String): The URL path for the SVG image to load.</li>
                     <li><b>onComplete</b> (Function) <i>Optional</i>: The function to call when the SVG is done loading.</li>
                     <li><b>cache</b> (Boolean) <i>Optional</i>: Whether or not to use the cache. Default is <b>true</b>.</li>
-                    <li><b>hideForLoad</b> (Boolean) <i>Optional</i>: Whether or not to hide the container while loading the SVG. Container is shown again only after the SVG has loaded and all modifications (provided by <b>load()</b>) have been applied. Default is <b>false</b>.</li>
+                    <li><b>hideForLoad</b> (Boolean) <i>Optional</i>: Whether or not to make the <b>destination</b> invisible while loading the SVG. <b>destination</b> is shown again only after the SVG has loaded and all modifications (provided by <b>load()</b>) have been applied. Default is <b>false</b>.</li>
                     <li><b>svgID</b> (String) <i>Optional</i>: The ID to be given to the injected SVG tag.</li>
                     <li><b>width</b> (Number) <i>Optional</i>: The width to be given to the injected SVG tag. Negative numbers are handled as percentage, otherwise <b>SvgFactory.unitType</b> is used.</li>
                     <li><b>height</b> (Number) <i>Optional</i>: The height to be given to the injected SVG tag. Negative numbers are handled as percentage, otherwise <b>SvgFactory.unitType</b> is used.</li>
-                    <li><b>color</b> (String or [String]) <i>Optional</i>: If a <b>String</b> is used, all <b>Path</b> tags will be set to that color. If an <b>Array</b> is used, the colors are applied in the order the <b>Path</b> tags appear in the SVG. <b>Do not</b> pass an <b>Array</b> of colors with less items than there are <b>Path</b> tags in the SVG image.</li>
+                    <li><b>fills</b> (String or [[String, Number], ]) <i>Optional</i>: See <b>SvgFactoryImage.setFills()</b> for a detailed explanation of setting the fills of an SVG.</li>
+                    <li><b>strokes</b> (String or [[String, Number], ]) <i>Optional</i>: See <b>SvgFactoryImage.setStrokes()</b> for a detailed explanation of setting the strokes of an SVG.</li>
                 </ul>
             </td> 
         </tr>
@@ -170,7 +173,7 @@ If your SVG has multiple <b>Path</b> tags, you can change the color of all the <
         </tr>
         <tr>
             <td><b>fills</b></td>
-            <td>(Array of Array [[], ]) An <b>Array</b> of <i>fills</i> for the SVG. A <i>fill</i> is an <b>Array</b> defined like so [<b>color</b>, <b>opacity</b>]. Any property can be ignored by setting it to null.
+            <td>(Array of Array [[], ]) An <b>Array</b> of <i>fills</i> for the SVG. A <i>fill</i> is an <b>Array</b> defined like so [<b>color</b>, <b>opacity</b>]. A null property means it has not been defined.
             <p> </p>
             <ul>
                 <li><b>color</b> (String): The color of the fill</li>
@@ -180,7 +183,7 @@ If your SVG has multiple <b>Path</b> tags, you can change the color of all the <
         </tr>
         <tr>
             <td><b>strokes</b></td>
-            <td>(Array of Array [[], ]) An <b>Array</b> of strokes for the SVG. A stroke is an <b>Array</b> defined like so [<b>color</b>, <b>opacity</b>, <b>width</b>, <b>miterlimit</b>, <b>dasharray</b>, <b>linecap</b>, <b>linejoin</b>]. Any property can be ignored by setting it to null.
+            <td>(Array of Array [[], ]) An <b>Array</b> of strokes for the SVG. A stroke is an <b>Array</b> defined like so [<b>color</b>, <b>opacity</b>, <b>width</b>, <b>miterlimit</b>, <b>dasharray</b>, <b>linecap</b>, <b>linejoin</b>]. A null property means it has not been defined.
             <p> </p>
             <ul>
                 <li><b>color</b> (String): The color of the stroke</li>
@@ -201,7 +204,52 @@ If your SVG has multiple <b>Path</b> tags, you can change the color of all the <
             <td><b>id</b></td>
             <td>(String) The ID of the <b>SvgFactoryImage</b> and underlying <b>SVGElement</b></td>
         </tr>
+        <tr>
+            <td><b>width</b></td>
+            <td>(String) The width of the <b>SVGElement</b> with it's <b>unitType</b> included (eg: "150px")</td>
+        </tr>
+        <tr>
+            <td><b>height</b></td>
+            <td>(String) The height of the <b>SVGElement</b> with it's <b>unitType</b> included (eg: "340in")</td>
+        </tr>
         </table>
+        <br>
+        <h3><i>SvgFactoryImage</i> Methods:</h3>
+        <table style="width:100%">
+        <tr>
+            <th width="30%">Method</th>
+            <th>Description</th> 
+        </tr>
+        <tr>
+            <td><b>setSize</b>(width, height)</td>
+            <td><p>Sets the <b>width</b> and <b>height</b> of the SVG <b>Element</b> and <b>SvgFactoryImage</b> using the <b>unitType</b> of <b>SvgFactory</b>. Providing a negative number will change the <b>unitType</b> of that value to "%". EG: setSize(20, -100) will result in (width: "20px", height: "100%") if the <b>unitType</b> of <b>SvgFactory</b> is "px"</p>
+             <p> </p>
+            <ul>
+                <li><b>width</b> (Number): The desired width</li>
+                <li><b>height</b> (Number): The desired height</li>
+            </ul>
+            </td>
+        </tr>
+        <tr>
+            <td><b>setWidth</b>(width)</td>
+            <td><p>Sets the <b>width</b> of the SVG <b>Element</b> and <b>SvgFactoryImage</b> using the <b>unitType</b> of <b>SvgFactory</b>. Providing a negative number will change the <b>unitType</b> of <b>width</b> to "%". EG: setWidth(-100) will result in (width: "100%")</p>
+             <p> </p>
+            <ul>
+                <li><b>width</b> (Number): The desired width</li>
+            </ul>
+            </td>
+        </tr>
+        <tr>
+            <td><b>setHeight</b>(height)</td>
+            <td><p>Sets the <b>height</b> of the SVG <b>Element</b> and <b>SvgFactoryImage</b> using the <b>unitType</b> of <b>SvgFactory</b>. Providing a negative number will change the <b>unitType</b> of <b>height</b> to "%". EG: setHeight(-100) will result in (height: "100%")</p>
+             <p> </p>
+            <ul>
+                <li><b>height</b> (Number): The desired height</li>
+            </ul>
+            </td>
+        </tr>
+        </table>
+        <br>
         </dd>
 </dl>
 
