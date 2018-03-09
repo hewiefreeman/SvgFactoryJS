@@ -1,0 +1,94 @@
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>SVG Test</title>
+	</head>
+	<body>
+		<p></p>
+			<svg xmlns="http://www.w3.org/2000/svg" height="150" width="400" id="circleText">
+			 <defs>
+			   <linearGradient id="grad3" x1="0%" y1="0%" x2="100%" y2="0%">
+				 <stop offset="0%" style="stop-color:rgb(255,255,0);stop-opacity:1" />
+				 <stop offset="100%" style="stop-color:rgb(255,0,0);stop-opacity:1" />
+			   </linearGradient>
+			 </defs>
+			 <ellipse id="circle" cx="200" cy="70" rx="85" ry="55" fill="url(#grad3)" />
+			 <text id="text" fill="#ffffff" font-size="45" font-family="Verdana" x="150" y="86">SVG</text>
+			</svg>
+		<p></p>
+			<div id="svgHolder1" style="width: 50px; height: 50px"></div>
+		<p></p>
+			<div id="svgHolder2" style="width: 50px; height: 50px"></div>
+		<p></p>
+			<div id="testText" style="padding-top: 50px;"></div>
+		<script type="text/javascript" src="SvgFactoryJS.min.js"></script>
+		<script type="text/javascript">
+			// Innitiate SvgFactory with pixels as the unit type
+			var svgFactory = new SvgFactory("px");
+
+			// Get elements of containers you want to put an SVG in
+			var svgHolder1 = document.getElementById("svgHolder1");
+			var svgHolder2 = document.getElementById("svgHolder2");
+
+			// The div in which testing data is put into
+			var testText = document.getElementById("testText");
+
+			// For testing get() with an Element reference in loadedSvg2()
+			var svg1Element;
+
+			// Load an SVG into svgHolder1 and call loadedSvg1() when done loading
+			svgFactory.load(svgHolder1, "images/test.svg", loadedSvg1);
+
+			function loadedSvg1(returnedSvg){
+				// returnedSvg is an SvgFactoryImage
+				// Center returnedSvg to container
+				returnedSvg.setSize("70%", "70%"); // Negative value means %, so 70% of it's container
+				// You can refer to the underlying SVGElement through an SvgFactoryImage with .element
+				returnedSvg.element.style = "position: relative; top: 15%; left: 15%;";
+
+				// Set the SVG's fills and id
+				returnedSvg.setFills([["#b1b2b3", 1]]);
+				returnedSvg.setId("firstSvg");
+
+				// Set svg1 to the Element reference of returnedSVG to test .get() for Element in loadedSvg2()
+				svg1Element = returnedSvg.element;
+
+				// Load an SVG into svgHolder2, call loadedSvg2() when done loading, ignore the cache, change fill, etc...
+				svgFactory.load(svgHolder2, "images/test.svg", loadedSvg2, false, false, "secondSvg", 50, 50, [["rgb(90, 16, 16)"], ["rgb(16, 90, 16)"], ["rgb(16, 16, 90)"]]);
+			}
+
+			function loadedSvg2(returnedSvg){
+				// Trace data for testing
+				testText.innerHTML = "Loaded: \""+returnedSvg.url+"\", \""+returnedSvg.id
+									+"\", ("+returnedSvg.width+", "+returnedSvg.height+"), \""+returnedSvg.fills
+									+"\", \""+returnedSvg.strokes+"\"";
+
+				// Get the first SVG's SvgFactoryImage by it's ID
+				var svg1 = svgFactory.get("firstSvg");
+				// var svg1 = svgFactory.get(svg1Element); // OR by it's Element reference
+				// Just testing arrays with less fills/strokes than paths in the SVG
+				svg1.setFills([["rgb(255, 40, 40)", 0.5], ["rgb(40, 255, 40)", 0.5]]);
+				svg1.setStrokes([["rgb(40, 0, 255)", 1, 7]]);
+			}
+
+			//
+			// Using SvgFactory with an embedded HTML document reference:
+			//
+
+			// Get the ID or Element of the embedded SVG
+			var htmlElement = document.getElementById("circleText");
+			// Use get() with the ID or Element to make an SvgFactoryImage of it
+			var htmlSvg = svgFactory.get(htmlElement);
+			// Now you can use SvgFactory to manipulate the embedded SVG
+			htmlSvg.setWidth(100);
+			htmlSvg.setHeight(100);
+			// You can use setFillOf and setStrokeOf to set the fill or stroke color of a specific shape in your SVG
+			htmlSvg.setFillOf(htmlElement.getElementById("circle"), [null, 0.5]); // Setting the opacity only
+			htmlSvg.setFillOf(htmlElement.getElementById("text"), ["#2d11cc", 1]);
+			htmlSvg.setStrokeOf(htmlElement.getElementById("circle"), ["#000000", 0.5, 5, null, [5, 10, 15, 20]]);
+			// htmlSvg.remove(); // If you want to test remove()
+
+			// Fin
+		</script>
+	</body>
+</html>
