@@ -1,0 +1,11 @@
+<svg
+   xmlns="http://www.w3.org/2000/svg"
+   id="square"
+   width="210mm"
+   height="210mm"
+   viewBox="0 0 210 210">
+  <path
+     id="rect4488"
+     d="m 33.813556,33.813558 c 47.457628,0 94.915254,0 142.372884,0 0,47.457627 0,94.915252 0,142.372882 -47.45763,0 -94.915256,0 -142.372884,0 0,-47.45763 0,-94.915255 0,-142.372882 z"
+     style="fill:#008080;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:2.64583325;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+</svg>
