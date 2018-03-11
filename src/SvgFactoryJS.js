@@ -6,6 +6,7 @@ function SvgFactory(unitType){
 	this.err = "SvgFactoryJS.js";
 	this.unitTypesArray = ["", "", "%", "em", "ex", "px", "cm", "mm", "in", "pt", "pc"];
 	this.loadedSvgs = [];
+	this.loadersLoading = [];
 	if(unitType != null){
 		this.setUnitType(unitType);
 	}else{
@@ -54,6 +55,25 @@ SvgFactory.prototype.load = function(destination, url, onComplete, cache, hideFo
 	}
 }
 
+SvgFactory.prototype.cancel = function(idOrDestination){
+	if((idOrDestination != null) && (idOrDestination.constructor === String)){
+		//STOP SINGLE BY THE SVG ID
+		for(var i = 0; i < this.loadersLoading.length; i++){
+			if(this.loadersLoading[i][1] == idOrDestination){
+				this.loadersLoading[i][2].abort();
+				return;
+			}
+		}
+	}else if(idOrDestination != null){
+		//STOP ALL LOADING TO DESTINATION
+		for(var i = 0; i < this.loadersLoading.length; i++){
+			if(this.loadersLoading[i][0] == idOrDestination){
+				this.loadersLoading[i][2].abort();
+			}
+		}
+	}
+}
+
 SvgFactory.prototype.loadXHR = function(destination, url, onComplete, cache, hideForLoad, svgID, width, height, fills, strokes) {
 	if((hideForLoad != null) && (hideForLoad)){
 		destination.style.visibility = "hidden";
@@ -86,8 +106,8 @@ SvgFactory.prototype.loadXHR = function(destination, url, onComplete, cache, hid
 				                              //img, fills, strokes, url, width, height, factory
 				onComplete(newFactoryImage);
 			}
-		}else if (this.readyState == 4 && this.status != 200){
-			var message = ["Could not load SVG from: \""+url+"\"", [self.err]];
+		}else if (this.readyState == 4 && this.status != 200 && this.status != 0){
+			var message = ["Could not load SVG from the URL \""+url+"\". Recieved status code: "+this.status, [self.err]];
 			throw new Error([message]);
 			return;
 		}
@@ -103,6 +123,7 @@ SvgFactory.prototype.loadXHR = function(destination, url, onComplete, cache, hid
 	}
 	//
 	xhttp.send();
+	this.loadersLoading.push([destination, svgID, xhttp]);
 }
 
 SvgFactory.prototype.loadRef = function(svgImage){
@@ -139,7 +160,7 @@ SvgFactory.prototype.loadRef = function(svgImage){
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
-// SvgFactory Get Methods ////////////////////////////////////////////////////////////////////////
+// Get Methods ///////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////
 
 SvgFactory.prototype.getSvgElements = function(svgImage){
