@@ -55,25 +55,6 @@ SvgFactory.prototype.load = function(destination, url, onComplete, cache, hideFo
 	}
 }
 
-SvgFactory.prototype.cancel = function(idOrDestination){
-	if((idOrDestination != null) && (idOrDestination.constructor === String)){
-		//STOP SINGLE BY THE SVG ID
-		for(var i = 0; i < this.loadersLoading.length; i++){
-			if(this.loadersLoading[i][1] == idOrDestination){
-				this.loadersLoading[i][2].abort();
-				return;
-			}
-		}
-	}else if(idOrDestination != null){
-		//STOP ALL LOADING TO DESTINATION
-		for(var i = 0; i < this.loadersLoading.length; i++){
-			if(this.loadersLoading[i][0] == idOrDestination){
-				this.loadersLoading[i][2].abort();
-			}
-		}
-	}
-}
-
 SvgFactory.prototype.loadXHR = function(destination, url, onComplete, cache, hideForLoad, svgID, width, height, fills, strokes) {
 	if((hideForLoad != null) && (hideForLoad)){
 		destination.style.visibility = "hidden";
@@ -83,6 +64,9 @@ SvgFactory.prototype.loadXHR = function(destination, url, onComplete, cache, hid
 	var self = this;
 	xhttp.onreadystatechange = function(){
 		if (this.readyState == 4 && this.status == 200){
+			if(destination == null){
+				return;
+			}
 			destination.innerHTML += xhttp.responseText;
 			//
 			var svgsInDest = destination.getElementsByTagName("svg");
@@ -123,7 +107,6 @@ SvgFactory.prototype.loadXHR = function(destination, url, onComplete, cache, hid
 	}
 	//
 	xhttp.send();
-	this.loadersLoading.push([destination, svgID, xhttp]);
 }
 
 SvgFactory.prototype.loadRef = function(svgImage){
@@ -160,7 +143,7 @@ SvgFactory.prototype.loadRef = function(svgImage){
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
-// Get Methods ///////////////////////////////////////////////////////////////////////////////////
+// SvgFactory Get Methods ////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////
 
 SvgFactory.prototype.getSvgElements = function(svgImage){
@@ -224,6 +207,77 @@ SvgFactory.prototype.get = function(idOrElement){
 	//
 	return null;
 }
+
+//////////////////////////////////////////////////////////////////////////////////////////////////
+// SvgFactory Set Methods ////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////
+
+SvgFactory.prototype.setFillOf = function(element, fill){
+	if(element.hasAttribute("style")){
+		if(fill[0] != null){
+			element.style.fill = fill[0];
+		}
+		if(fill[1] != null){
+			element.style.fillOpacity = fill[1];
+		}
+	}else{
+		if(fill[0] != null){
+			element.setAttribute("fill", fill[0]);
+		}
+		if(fill[1] != null){
+			element.setAttribute("fill-opacity", fill[1]);
+		}
+	}
+}
+
+SvgFactory.prototype.setStrokeOf = function(element, stroke){
+	if(element.hasAttribute("style")){
+		if(stroke[0] != null){
+			element.style.stroke = stroke[0];
+		}
+		if(stroke[1] != null){
+			element.style.strokeOpacity = stroke[1];
+		}
+		if(stroke[2] != null){
+			element.style.strokeWidth = stroke[2];
+		}
+		if(stroke[3] != null){
+			element.style.strokeMiterlimit = stroke[3];
+		}
+		if(stroke[4] != null){
+			element.style.strokeDasharray = stroke[4];
+		}
+		if(stroke[5] != null){
+			element.style.strokeLinecap = stroke[5];
+		}
+		if(stroke[6] != null){
+			element.style.strokeLinejoin = stroke[6];
+		}
+	}else{
+		if(stroke[0] != null){
+			element.setAttribute("stroke", stroke[0]);
+		}
+		if(stroke[1] != null){
+			element.setAttribute("stroke-opacity", stroke[1]);
+		}
+		if(stroke[2] != null){
+			element.setAttribute("stroke-width", stroke[2]);
+		}
+		if(stroke[3] != null){
+			element.setAttribute("stroke-miterlimit", stroke[3]);
+		}
+		if(stroke[4] != null){
+			element.setAttribute("stroke-dasharray", stroke[4]);
+		}
+		if(stroke[5] != null){
+			element.setAttribute("stroke-linecap", stroke[5]);
+		}
+		if(stroke[6] != null){
+			element.setAttribute("stroke-linejoin", stroke[6]);
+		}
+	}
+}
+
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
 // SvgFactoryImage Get Methods ///////////////////////////////////////////////////////////////////
@@ -306,7 +360,7 @@ SvgFactoryImage.prototype.setFills = function(fills){
 		//
 		for(var i = 0; i < elements.length; i++){
 			if(lessFills){
-				this.setFillOf(elements[i], fills[fillOn-1]);
+				this.factory.setFillOf(elements[i], fills[fillOn-1]);
 				//
 				if(fillOn == fills.length){
 					fillOn = 1;
@@ -314,28 +368,10 @@ SvgFactoryImage.prototype.setFills = function(fills){
 					fillOn++;
 				}
 			}else{
-				this.setFillOf(elements[i], fills[i]);
+				this.factory.setFillOf(elements[i], fills[i]);
 			}
 		}
 		this.fills = fills;
-	}
-}
-
-SvgFactoryImage.prototype.setFillOf = function(element, fill){
-	if(element.hasAttribute("style")){
-		if(fill[0] != null){
-			element.style.fill = fill[0];
-		}
-		if(fill[1] != null){
-			element.style.fillOpacity = fill[1];
-		}
-	}else{
-		if(fill[0] != null){
-			element.setAttribute("fill", fill[0]);
-		}
-		if(fill[1] != null){
-			element.setAttribute("fill-opacity", fill[1]);
-		}
 	}
 }
 
@@ -355,7 +391,7 @@ SvgFactoryImage.prototype.setStrokes = function(strokes){
 		//
 		for(var i = 0; i < paths.length; i++){
 			if(lessStrokes){
-				this.setStrokeOf(paths[i], strokes[strokeOn-1]);
+				this.factory.setStrokeOf(paths[i], strokes[strokeOn-1]);
 				//
 				if(strokeOn == strokes.length){
 					strokeOn = 1;
@@ -363,58 +399,10 @@ SvgFactoryImage.prototype.setStrokes = function(strokes){
 					strokeOn++;
 				}
 			}else{
-				this.setStrokeOf(paths[i], strokes[i]);
+				this.factory.setStrokeOf(paths[i], strokes[i]);
 			}
 		}
 		this.strokes = strokes;
-	}
-}
-
-SvgFactoryImage.prototype.setStrokeOf = function(element, stroke){
-	if(element.hasAttribute("style")){
-		if(stroke[0] != null){
-			element.style.stroke = stroke[0];
-		}
-		if(stroke[1] != null){
-			element.style.strokeOpacity = stroke[1];
-		}
-		if(stroke[2] != null){
-			element.style.strokeWidth = stroke[2];
-		}
-		if(stroke[3] != null){
-			element.style.strokeMiterlimit = stroke[3];
-		}
-		if(stroke[4] != null){
-			element.style.strokeDasharray = stroke[4];
-		}
-		if(stroke[5] != null){
-			element.style.strokeLinecap = stroke[5];
-		}
-		if(stroke[6] != null){
-			element.style.strokeLinejoin = stroke[6];
-		}
-	}else{
-		if(stroke[0] != null){
-			element.setAttribute("stroke", stroke[0]);
-		}
-		if(stroke[1] != null){
-			element.setAttribute("stroke-opacity", stroke[1]);
-		}
-		if(stroke[2] != null){
-			element.setAttribute("stroke-width", stroke[2]);
-		}
-		if(stroke[3] != null){
-			element.setAttribute("stroke-miterlimit", stroke[3]);
-		}
-		if(stroke[4] != null){
-			element.setAttribute("stroke-dasharray", stroke[4]);
-		}
-		if(stroke[5] != null){
-			element.setAttribute("stroke-linecap", stroke[5]);
-		}
-		if(stroke[6] != null){
-			element.setAttribute("stroke-linejoin", stroke[6]);
-		}
 	}
 }
 
