@@ -42,13 +42,13 @@ Or you can set the unit type with <b>setUnitType()</b>:
 
 ### Loading...
 
-To load an external SVG, first you need to get the <b>Element</b> reference of the container you'd like to inject it into. Then pass the container's <b>Element</b> reference and a URL into <b>svgFactory.load()</b>:
+To load an external SVG, first you need to get the <b>Element</b> reference of the container you'd like to inject it into. Then pass the container's <b>Element</b> reference and a URL into <b>SvgFactory.load()</b>:
     
     //...
     var container = document.getElementById("container_id");
     svgFactory.load(container, "the_url.svg");
     
-It's easy to make a listener for when the SVG is done loading. Just pass the name of the callback function as the third parameter in <b>svgFactory.load()</b>:
+It's easy to make a listener for when the SVG is done loading. Just pass the name of the callback function as the third parameter in <b>SvgFactory.load()</b>:
     
     //...
     svgFactory.load(container, "the_url.svg", callbackFunction);
@@ -59,7 +59,7 @@ It's easy to make a listener for when the SVG is done loading. Just pass the nam
 
 > The parameter for <b>callbackFunction</b> is the <b>SvgFactoryImage</b> that was created along with the injected SVG. To learn more about the SvgFactoryImage type, see the Documentation or keep reading for a quick explanation.</div>
 
-You can also pass additional parameters to <b>svgFactory.load()</b>:
+You can also pass additional parameters to <b>SvgFactory.load()</b>:
     
     //...
     svgFactory.load(destination, url, onComplete, cache, hideForLoad, svgID, width, height, fills, strokes);
@@ -73,7 +73,7 @@ If you have an SVG on your site that has not been injected using SvgFactoryJS, n
     //or by it's SVG Element reference:
     var svg2 = svgFactory.get(svg2Element);
     
-<b>svgFactory.get()</b> returns an <b>SvgFactoryImage</b>. You can use an <b>SvgFactoryImage</b> to access all the features to manipulate the underlying SVG with SvgFactoryJS. This makes it fast and easy to remove SVG elements (and it's garbage) from your site, or set the SVG's fills, strokes, size, or ID:
+<b>SvgFactory.get()</b> returns an <b>SvgFactoryImage</b>. You can use an <b>SvgFactoryImage</b> to access all the features to manipulate the underlying SVG with SvgFactoryJS. This makes it fast and easy to remove SVG elements (and it's garbage) from your site, or set the SVG's fills, strokes, size, or ID:
     
     //...
     var svg = svgFactory.get("theSvg");
