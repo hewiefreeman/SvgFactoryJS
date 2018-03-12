@@ -89,7 +89,7 @@ SvgFactoryJS uses an <b>Array</b> to define a fill or a stroke:
 
 <ul>
     <li>Fill: [<b>color</b>, <b>opacity</b>]</li>
-    <li>Stroke: [<b>color</b>, <b>opacity, <b>width</b>, <b>miter-limit</b>, <b>dash-array</b>, <b>line-cap</b>, <b>line-join</b>]</li>
+    <li>Stroke: [<b>color</b>, <b>opacity</b>, <b>width</b>, <b>miter-limit</b>, <b>dash-array</b>, <b>line-cap</b>, <b>line-join</b>]</li>
 </ul>
 
 The <b>color</b> is the only required property for either a fill or a stroke. Any other property can be set to null to skip it, but the fill or stroke <b>Array</b> must be in the same order shown above. You can also cut the <b>Array</b> short of properties starting from the end, as long as you maintain the order, and the <b>Array</b> starts with color.
@@ -104,7 +104,7 @@ A fill takes a <b>color</b> (<b>String</b>) and the <b>opacity</b> (<b>Number</b
     <li>Line Join (<b>String</b>): <a href="https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/stroke-linejoin">See Mozilla Docs</a></li>
 </ul>
     
-If your SVG has multiple <b>Elements</b>, you can change the fill of each <b>Element</b> individually by making an <b>Array</b> of fills:
+If your SVG has multiple shapes, you can change the fill of each shape individually by making an <b>Array</b> of fills:
 
     //...
     svg.setFills([["#7c2af9", 1], ["rgb(120, 65, 200)", 0.6], ["rgba(74, 179, 7, 0.5)", 0.3]]);
@@ -114,9 +114,9 @@ Same goes for the SVG's strokes:
     //...
     svg.setStrokes([["#7c2af9", 1, 10], ["rgb(120, 65, 200)", 0.6, 3, null, [3, 5], "round", "bevel"], ["rgba(74, 179, 7, 0.5)"]]);
 
-> <b>Note</b>: The fills and strokes are applied in the same order that each <b>Element</b> appears in the SVG.
+> <b>Note</b>: The fills and strokes are applied in the same order that each shape appears in the raw SVG file.
 
-> <b>Warning</b>: If you pass a <b>String</b> to <b>setFills()</b> or <b>setStrokes()</b> for an SVG with more than one inner <b>Element</b>, the color will be applied to every inner <b>Element</b>. Also, if you pass an <b>Array</b> that doesn't have as many fills or strokes as the SVG has <b>Element</b>s, it will cycle through the provided fills or strokes.
+> <b>Warning</b>: If you pass a <b>String</b> to <b>setFills()</b> or <b>setStrokes()</b> for an SVG with more than one shape, the color will be applied to all the shapes in the SVG. Also, if you pass an <b>Array</b> that doesn't have as many fills or strokes as the SVG has shapes, it will cycle through the provided fills or strokes.
 
 You can get an SVG's individual shape by it's id with <b>SvgFactoryImage.getElementById()</b>:
 
