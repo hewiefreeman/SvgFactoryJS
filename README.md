@@ -88,13 +88,13 @@ If you have an SVG on your site that has not been injected using SvgFactoryJS, n
 SvgFactoryJS uses an <b>Array</b> to define a fill or a stroke:
 
 <ul>
-    <li>Fill: [color, opacity]</li>
-    <li>Stroke: [color, opacity, width, miter-limit, dash-array, line-cap, line-join]</li>
+    <li>Fill: [<b>color</b>, <b>opacity</b>]</li>
+    <li>Stroke: [<b>color</b>, <b>opacity, <b>width</b>, <b>miter-limit</b>, <b>dash-array</b>, <b>line-cap</b>, <b>line-join</b>]</li>
 </ul>
 
-The color is the only required property for either a fill or a stroke. Any other property can be set to null to skip it, but the fill or stroke <b>Array</b> must be in the same order shown above. You can also cut the <b>Array</b> short of properties starting from the end, as long as you maintain the order, and the <b>Array</b> starts with color.
+The <b>color</b> is the only required property for either a fill or a stroke. Any other property can be set to null to skip it, but the fill or stroke <b>Array</b> must be in the same order shown above. You can also cut the <b>Array</b> short of properties starting from the end, as long as you maintain the order, and the <b>Array</b> starts with color.
 
-A fill takes a color (<b>String</b>) and the opacity (<b>Number</b>) of the color. You can also supply an RGBA color, and take the opacity out of the <b>Array</b> or set it to null. Same goes for a stroke, but it also can take in a few other properties. You can think of strokes as outlines, or just lines in general:
+A fill takes a <b>color</b> (<b>String</b>) and the <b>opacity</b> (<b>Number</b>) of the color. You can also supply an RGBA color, and take the <b>opacity</b> out of the <b>Array</b> or set it to null. Same goes for a stroke, but it also can take in a few other properties. You can think of strokes as outlines, or just lines in general:
 
 <ul>
     <li>Width (<b>Number</b>): The thickness of the stroke</li>
