@@ -104,7 +104,7 @@ A fill takes a <b>color</b> (<b>String</b>) and the <b>opacity</b> (<b>Number</b
     <li>Line Join (<b>String</b>): <a href="https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/stroke-linejoin">See Mozilla Docs</a></li>
 </ul>
     
-If your SVG has multiple shapes, you can change the fill of each shape individually by making an <b>Array</b> of fills:
+If your SVG has multiple shapes, you can change the fill of all shapes in the same line by making an <b>Array</b> of fills:
 
     //...
     svg.setFills([["#7c2af9", 1], ["rgb(120, 65, 200)", 0.6], ["rgba(74, 179, 7, 0.5)", 0.3]]);
