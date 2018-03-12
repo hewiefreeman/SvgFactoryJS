@@ -5,6 +5,7 @@ A fast, easy, and lightweight vanilla Javascript SVG API for manipulating, manag
 
 <ul>
     <li>Load and inject SVGs straight into your HTML from a URL</li>
+    <li>Use SvgFactoryJS on any SVGs, even those not injected by SvgFactoryJS</li>
     <li>Methods to change the fills and stokes of entire SVGs or individual shapes with ease</li>
     <li>Generates a viewBox for SVGs without one for easy scaling</li>
     <li>Keeps track of all your SVGs</li>
@@ -25,7 +26,9 @@ That's it!
 
 # Quick Start
 
-Start by initializing the SvgFactory:
+### Setting up...
+
+Make a global SvgFactory reference:
 
     var svgFactory = new SvgFactory();
     
@@ -36,7 +39,9 @@ You may also provide a <b>String</b> parameter for <b>SvgFactory()</b> to set it
 Or you can set the unit type with <b>setUnitType()</b>:
 
     svgFactory.setUnitType("px");
-    
+
+### Loading...
+
 To load an external SVG, first you need to get the <b>Element</b> reference of the container you'd like to inject it into. Then pass the container's <b>Element</b> reference and a URL into <b>svgFactory.load()</b>:
     
     //...
@@ -54,7 +59,7 @@ It's easy to make a listener for when the SVG is done loading. Just pass the nam
 
 > The parameter for <b>callbackFunction</b> is the <b>SvgFactoryImage</b> that was created along with the injected SVG. To learn more about the SvgFactoryImage type, see the Documentation or keep reading for a quick explanation.</div>
 
-You can also pass additional parameters to <b>svgFactory.load()</b> (see Documentation):
+You can also pass additional parameters to <b>svgFactory.load()</b>:
     
     //...
     svgFactory.load(destination, url, onComplete, cache, hideForLoad, svgID, width, height, fills, strokes);
@@ -68,7 +73,7 @@ If you have an SVG on your site that has not been injected using SvgFactoryJS, n
     //or by it's SVG Element reference:
     var svg2 = svgFactory.get(svg2Element);
     
-<b>svgFactory.get()</b> returns an <b>SvgFactoryImage</b>. You can use an <b>SvgFactoryImage</b> to access all the features to manipulate the underlying SVG with SvgFactoryJS. This makes it fast and easy to remove SVG elements (and it's garbage) from your site, or set the SVG's fills, strokes, size, or ID (see Documentation):
+<b>svgFactory.get()</b> returns an <b>SvgFactoryImage</b>. You can use an <b>SvgFactoryImage</b> to access all the features to manipulate the underlying SVG with SvgFactoryJS. This makes it fast and easy to remove SVG elements (and it's garbage) from your site, or set the SVG's fills, strokes, size, or ID:
     
     //...
     var svg = svgFactory.get("theSvg");
@@ -78,7 +83,28 @@ If you have an SVG on your site that has not been injected using SvgFactoryJS, n
     svg.setId("new_svg_id");
     svg.remove();
     
-If your SVG has multiple <b>Elements</b>, you can change the fill or stroke of each <b>Element</b> individually by making an <b>Array</b> of fills:
+### Setting fills and strokes...
+
+SvgFactoryJS uses an <b>Array</b> to define a fill or a stroke:
+
+<ul>
+    <li>Fill: [color, opacity]</li>
+    <li>Stroke: [color, opacity, width, miter-limit, dash-array, line-cap, line-join]</li>
+</ul>
+
+The color is the only required property for either a fill or a stroke. Any other property can be set to null to skip it, but the fill or stroke <b>Array</b> must be in the same order shown above. You can also cut the <b>Array</b> short of properties starting from the end, as long as you maintain the order, and the <b>Array</b> starts with color.
+
+A fill takes a color (<b>String</b>) and the opacity (<b>Number</b>) of the color. You can also supply an RGBA color, and take the opacity out of the <b>Array</b> or set it to null. Same goes for a stroke, but it also can take in a few other properties. You can think of strokes as outlines, or just lines in general:
+
+<ul>
+    <li>Width (<b>Number</b>): The thickness of the stroke</li>
+    <li>Miter Limit (<b>Number</b>): <a href="https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/stroke-miterlimit">See Mozilla Docs</a></li>
+    <li>Dash Array (<b>Array</b>): <a href="https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/stroke-dasharray">See Mozilla Docs</a></li>
+    <li>Line Cap (<b>String</b>): <a href="https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/stroke-linecap">See Mozilla Docs</a></li>
+    <li>Line Join (<b>String</b>): <a href="https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/stroke-linejoin">See Mozilla Docs</a></li>
+</ul>
+    
+If your SVG has multiple <b>Elements</b>, you can change the fill of each <b>Element</b> individually by making an <b>Array</b> of fills:
 
     //...
     svg.setFills([["#7c2af9", 1], ["rgb(120, 65, 200)", 0.6], ["rgba(74, 179, 7, 0.5)", 0.3]]);
@@ -86,13 +112,23 @@ If your SVG has multiple <b>Elements</b>, you can change the fill or stroke of e
 Same goes for the SVG's strokes:
 
     //...
-    svg.setStrokes([["#7c2af9", 1], ["rgb(120, 65, 200)", 0.6], ["rgba(74, 179, 7, 0.5)", 0.3]]);
+    svg.setStrokes([["#7c2af9", 1, 10], ["rgb(120, 65, 200)", 0.6, 3, null, [3, 5], "round", "bevel"], ["rgba(74, 179, 7, 0.5)"]]);
 
 > <b>Note</b>: The fills and strokes are applied in the same order that each <b>Element</b> appears in the SVG.
 
 > <b>Warning</b>: If you pass a <b>String</b> to <b>setFills()</b> or <b>setStrokes()</b> for an SVG with more than one inner <b>Element</b>, the color will be applied to every inner <b>Element</b>. Also, if you pass an <b>Array</b> that doesn't have as many fills or strokes as the SVG has <b>Element</b>s, it will cycle through the provided fills or strokes.
 
-You can also get an SVG's
+You can get an SVG's individual shape by it's id with <b>SvgFactoryImage.getElementById()</b>:
+
+    //...
+    var squareShape = the_svg.getElementById("square");
+    
+You can use this shape reference to to change it's fill or stroke with <b>SvgFactory.setFillOf()</b> and <b>SvgFactory.setStrokeOf()</b>:
+
+    //...
+    svgFactory.setFillOf(squareShape, ["#ffffff", 0.45]);
+    svgFactory.setStrokeOf(squareShape, ["#000000", 1, 5, null, [5, 10]]);
+
 
 <hr>
 
