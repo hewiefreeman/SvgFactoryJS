@@ -1,7 +1,15 @@
 # SvgFactoryJS
 A fast, easy, and lightweight vanilla Javascript SVG API for manipulating, managing, and externally loading SVGs with caching.
 
-<h4>Are you looking for a loader, element manager, sizing tool, or color changer for your SVGs? Well, look no further. This library is fast and efficient at what it does, and is coded with 100% vanilla javascript. Not to mention you can ignore the cache if you want a fresh SVG every time.</h4>
+<h4><b>Main Features:</b></h4>
+
+<ul>
+    <li>Load and inject SVGs straight into your HTML from a URL</li>
+    <li>Methods to change the fills and stokes of entire SVGs or individual shapes with ease</li>
+    <li>Generates a viewBox for SVGs without one for easy scaling</li>
+    <li>Keeps track of all your SVGs</li>
+    <li>And plenty of more helpful features!</li>
+</ul>
 
 <hr>
 
