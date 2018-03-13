@@ -95,12 +95,20 @@ The methods for resizing an SVG are <b>SvgFactoryImage.setSize()</b>, <b>SvgFact
     
 The methods <b>SvgFactoryImage.setWidth()</b> and <b>SvgFactoryImage.setHeight()</b> work the same way, but only take one parameter:
 
-    //....
+    //...
     var svg = svgFactory.get("my_svg");
     svgFactory.setUnitType("em");
     svg.setWidth(79);
     svg.setHeight("50pt");
     // Now svg's width is 79em, and height is 50pt
+    
+If you want to access the <b>SVGElement</b> of an <b>SvgFactoryImage</b> to (for instance) change the SVG's style properties or add attributes to it, use <b>SvgFactoryImage.element</b>:
+
+    //...
+    var svg = svgFactory.get("my_svg");
+    var svg_element = svg.element;
+    svg_element.style.top = "40px";
+    svg_element.setAttribute("class", "my_svg_css_class");
 
 ### Setting fills and strokes...
 
