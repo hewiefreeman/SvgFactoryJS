@@ -82,7 +82,26 @@ If you have an SVG on your site that has not been injected using SvgFactoryJS, n
     svg.setSize(125, 352);
     svg.setId("new_svg_id");
     svg.remove();
+
+### Resizing...
+
+The methods for resizing an SVG are <b>SvgFactoryImage.setSize()</b>, <b>SvgFactoryImage.setWidth()</b>, and <b>SvgFactoryImage.setHeight()</b>. The method <b>SvgFactoryImage.setSize()</b> takes in the parameters (<b>width</b>, <b>height</b>). Width and height can both either be a <b>String</b> or a <b>Number</b>. A <b>Number</b> will use whatever <b>unitType</b> is set in <b>SvgFactory</b>, and a <b>String</b> will use whatever <b>unitType</b> is provided in the <b>String</b>:
+
+    //...
+    var svg = svgFactory.get("my_svg");
+    svgFactory.setUnitType("px");
+    svg.setSize("100%", 50);
+    // Now svg's width is 100%, and height is 50px
     
+The methods <b>SvgFactoryImage.setWidth()</b> and <b>SvgFactoryImage.setHeight()</b> work the same way, but only take one parameter:
+
+    //....
+    var svg = svgFactory.get("my_svg");
+    svgFactory.setUnitType("em");
+    svg.setWidth(79);
+    svg.setHeight("50pt");
+    // Now svg's width is 79em, and height is 50pt
+
 ### Setting fills and strokes...
 
 SvgFactoryJS uses an <b>Array</b> to define a fill or a stroke:
@@ -123,7 +142,7 @@ You can get an SVG's individual shape by it's id with <b>SvgFactoryImage.getElem
     //...
     var squareShape = the_svg.getElementById("square");
     
-You can use this shape reference to to change it's fill or stroke with <b>SvgFactory.setFillOf()</b> and <b>SvgFactory.setStrokeOf()</b>:
+You can use this shape reference to change it's fill or stroke with <b>SvgFactory.setFillOf()</b> and <b>SvgFactory.setStrokeOf()</b>:
 
     //...
     svgFactory.setFillOf(squareShape, ["#ffffff", 0.45]);
